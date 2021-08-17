@@ -32,16 +32,3 @@ class PersonalInfo(models.Model):
 
     def __str__(self):
         return self.first_name
-
-
-
-def inorder(self,root):
-    result=[]
-    self.solve(root,result)
-    return result
-
-def solve(self,node,result):
-    if node:
-        self.solve(node.left,result)
-        result.append(node.val)
-        self.solve(node.right,result)
