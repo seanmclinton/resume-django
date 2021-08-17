@@ -11,4 +11,4 @@ class ResumeSerializer(serializers.ModelSerializer):
 class ContactInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactInfo
-        fields = ('first_name', 'last_name', 'city')
+        fields = ('first_name', 'last_name', 'city', 'email', 'linked_in_link', 'bio')
