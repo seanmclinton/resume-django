@@ -18,7 +18,7 @@ class Resume(models.Model):
         verbose_name_plural = 'Resumes'
 
 
-class PersonalInfo(models.Model):
+class ContactInfo(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     city = models.CharField(max_length=50)
@@ -27,8 +27,8 @@ class PersonalInfo(models.Model):
     bio = models.TextField(null=True)
 
     class Meta:
-        verbose_name = 'Personal Information'
-        verbose_name_plural = 'Personal Information'
+        verbose_name = 'Contact Information'
+        verbose_name_plural = 'Contact Information'
 
     def __str__(self):
         return self.first_name

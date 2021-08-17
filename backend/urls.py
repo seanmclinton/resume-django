@@ -20,11 +20,9 @@ from resume import views
 
 router = routers.DefaultRouter()
 router.register(r'resume', views.ResumeView, 'resume')
-router.register(r'personalinfo', views.PersonalInfoView)
+router.register(r'contact_info', views.ContactInfoView, 'contact_info')
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('resume/', include(router.urls)),
-    path('resume/all', views.get_resume_items),
-    path('getMyInfo/', views.get_personal_info)
 ]

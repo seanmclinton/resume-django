@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Resume, PersonalInfo
+from .models import Resume, ContactInfo
 
 
 class ResumeSerializer(serializers.ModelSerializer):
@@ -8,7 +8,7 @@ class ResumeSerializer(serializers.ModelSerializer):
         fields = ('id', 'job_title', 'company', 'description')
 
 
-class PersonalInfoSerializer(serializers.ModelSerializer):
+class ContactInfoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PersonalInfo
+        model = ContactInfo
         fields = ('first_name', 'last_name', 'city')

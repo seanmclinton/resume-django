@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.core.serializers import serialize
-from .serializers import ResumeSerializer, PersonalInfoSerializer
+from .serializers import ResumeSerializer, ContactInfoSerializer
 from rest_framework import viewsets
-from .models import Resume, PersonalInfo
+from .models import Resume, ContactInfo
 
 
 # Create your views here.
@@ -14,9 +14,9 @@ class ResumeView(viewsets.ModelViewSet):
     queryset = Resume.objects.all()
 
 
-class PersonalInfoView(viewsets.ModelViewSet):
-    serializer_class = PersonalInfoSerializer
-    queryset = PersonalInfo.objects.all()
+class ContactInfoView(viewsets.ModelViewSet):
+    serializer_class = ContactInfoSerializer
+    queryset = ContactInfo.objects.all()
 
 
 def get_personal_info(request):
