@@ -5,15 +5,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .serializers import ResumeSerializer, ContactInfoSerializer
 from rest_framework import viewsets
-from .models import Resume, ContactInfo
-
-
+from .models import Resume, ContactInfo, TechnologyUsed
 # Create your views here.
 
-
-class ContactInfoView(viewsets.ModelViewSet):
-    serializer_class = ContactInfoSerializer
-    queryset = ContactInfo.objects.all()
 
 @csrf_exempt
 def resume_list(request):

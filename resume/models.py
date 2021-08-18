@@ -30,3 +30,15 @@ class ContactInfo(models.Model):
 
     def __str__(self):
         return self.first_name
+
+
+class TechnologyUsed(models.Model):
+    tech_name = models.CharField(max_length=50)
+    used_at = models.ForeignKey(Resume, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Technology Used'
+        verbose_name_plural = 'Technologies Used'
+
+    def __str__(self):
+        return self.tech_name
