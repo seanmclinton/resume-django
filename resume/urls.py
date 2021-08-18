@@ -5,5 +5,4 @@ urlpatterns = [
     path('resume/', views.resume_list),
     path('resume/<int:pk>/', views.resume_detail),
     path('contact_info/', views.contact_list),
-    # path('snippets/<int:pk>/', views.snippet_detail),
 ]
