@@ -3,8 +3,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 
-from .serializers import ResumeSerializer, ContactInfoSerializer
-from .models import Resume, ContactInfo, TechnologyUsed
+from .serializers import *
+from .models import *
 # Create your views here.
 
 
@@ -25,6 +25,14 @@ def resume_detail(request):
 @csrf_exempt
 def contact_list(request):
     if request.method == "GET":
-        resumes = ContactInfo.objects.all()
-        serializer = ContactInfoSerializer(resumes, many=True)
+        contacts = ContactInfo.objects.all()
+        serializer = ContactInfoSerializer(contacts, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+def techology_used_list(request):
+    if request.method == "GET":
+        tech = TechnologyUsed.objects.all()
+        serializer = TechnologyUsedSerializer(tech, many=True)
         return JsonResponse(serializer.data, safe=False)
