@@ -21,7 +21,7 @@ class ResumeTestCases(TestCase):
         self.assertEqual(str(test_object), "Test Job A")
 
 
-class ContactInfoTestCasesTestCase):
+class ContactInfoTestCases(TestCase):
     def setUp(self) -> None:
         ContactInfo.objects.create(first_name="TestFirstName",
                                    last_name="TestLastName",
@@ -45,5 +45,9 @@ class ContactInfoTestCasesTestCase):
 
 class TechnologyUsedTestCases(TestCase):
     def setUp(self) -> None:
-        pass
-        # TechnologyUsed.objects.create()
+        job_a_start_date = datetime.datetime(2020, 2, 4, 0, 0)
+        job_a_end_date = datetime.datetime(2021, 1, 5, 0, 0)
+        Resume.objects.create(job_title="Test Job A", company="Test Company A", description="Test Description A",
+                              start_date=job_a_start_date, end_date=job_a_end_date)
+        resume_object = Resume.objects.get(job_title="Test Job A")
+        TechnologyUsed.objects.create(tech_name="Test Tech A", used_at=resume_object)
