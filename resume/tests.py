@@ -47,7 +47,11 @@ class TechnologyUsedTestCases(TestCase):
     def setUp(self) -> None:
         job_a_start_date = datetime.datetime(2020, 2, 4, 0, 0)
         job_a_end_date = datetime.datetime(2021, 1, 5, 0, 0)
-        Resume.objects.create(job_title="Test Job A", company="Test Company A", description="Test Description A",
-                              start_date=job_a_start_date, end_date=job_a_end_date)
+        Resume.objects.create(job_title="Test Job A",
+                              company="Test Company A",
+                              description="Test Description A",
+                              start_date=job_a_start_date,
+                              end_date=job_a_end_date)
+
         resume_object = Resume.objects.get(job_title="Test Job A")
         TechnologyUsed.objects.create(tech_name="Test Tech A", used_at=resume_object)
