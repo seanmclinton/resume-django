@@ -1,10 +1,10 @@
 from django.test import TestCase
-from resume.models import Resume, ContactInfo
+from resume.models import *
 import datetime
 # Create your tests here.
 
 
-class ResumeTestCase(TestCase):
+class ResumeTestCases(TestCase):
     def setUp(self) -> None:
         job_a_start_date = datetime.datetime(2020, 2, 4, 0, 0)
         job_a_end_date = datetime.datetime(2021, 1, 5, 0, 0)
@@ -21,7 +21,7 @@ class ResumeTestCase(TestCase):
         self.assertEqual(str(test_object), "Test Job A")
 
 
-class ContactInfoTestCase(TestCase):
+class ContactInfoTestCasesTestCase):
     def setUp(self) -> None:
         ContactInfo.objects.create(first_name="TestFirstName",
                                    last_name="TestLastName",
@@ -41,3 +41,9 @@ class ContactInfoTestCase(TestCase):
     def test_str_function(self) -> None:
         test_object = ContactInfo.objects.get(first_name="TestFirstName")
         self.assertEqual(str(test_object), "TestFirstName")
+
+
+class TechnologyUsedTestCases(TestCase):
+    def setUp(self) -> None:
+        pass
+        # TechnologyUsed.objects.create()
