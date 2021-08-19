@@ -21,6 +21,12 @@ class ResumeViewTestCases(APITestCase):
         url = reverse('resume_list')
         response = self.client.get(url)
         self.assertTrue(status.is_success(response.status_code))
+        # confirm data is returned accurately
+
+    def test_resume_list_post(self):
+        # test post list of resume items
+
+        pass
 
 
 class ContactInfoViewTestCases(APITestCase):

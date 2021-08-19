@@ -21,12 +21,12 @@ def resume_list(request):
         request_body = json.loads(request.body)
         response = {'created': []}
         try:
-            for resource in request_body['resources']:
-                resource_start_date = datetime.strptime(resource['start_date'], '%m/%d/%Y')
-                resource_end_date = datetime.strptime(resource['end_date'], '%m/%d/%Y')
-                new_object = Resume.objects.create(job_title=resource['job_title'],
-                                                   company=resource['company'],
-                                                   description=resource['description'],
+            for record in request_body['records']:
+                resource_start_date = datetime.strptime(record['start_date'], '%m/%d/%Y')
+                resource_end_date = datetime.strptime(record['end_date'], '%m/%d/%Y')
+                new_object = Resume.objects.create(job_title=record['job_title'],
+                                                   company=record['company'],
+                                                   description=record['description'],
                                                    start_date=resource_start_date,
                                                    end_date=resource_end_date)
                 response['created'].append(model_to_dict(new_object))
