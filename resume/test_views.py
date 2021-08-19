@@ -2,6 +2,7 @@ from django.urls import reverse, path, include
 from rest_framework import status
 from rest_framework.test import APITestCase
 import datetime
+import json
 
 from .models import *
 
@@ -17,16 +18,50 @@ class ResumeViewTestCases(APITestCase):
         Resume.objects.create(job_title="Test Job A", company="Test Company A", description="Test Description A",
                               start_date=job_a_start_date, end_date=job_a_end_date)
 
-    def test_resume_list_url(self):
+        job_b_start_date = datetime.datetime(2019, 2, 4, 0, 0)
+        job_b_end_date = datetime.datetime(2020, 2, 3, 0, 0)
+        Resume.objects.create(job_title="Test Job B", company="Test Company B", description="Test Description B",
+                              start_date=job_b_start_date, end_date=job_b_end_date)
+
+    def test_resume_list_get(self):
         url = reverse('resume_list')
         response = self.client.get(url)
+        response_json = json.loads(response.content.decode())
         self.assertTrue(status.is_success(response.status_code))
+        self.assertEqual(response_json[0]['job_title'], "Test Job A")
+        self.assertEqual(response_json[0]['company'], "Test Company A")
+        self.assertEqual(response_json[0]['description'], "Test Description A")
+        self.assertEqual(response_json[0]['start_date'], "2020-02-04")
+        self.assertEqual(response_json[0]['end_date'], "2021-01-05")
+
+    def test_resume_list_get_ordering(self):
+        # testing for resume items sorted in descending order by start date
+        url = reverse('resume_list')
+        response = self.client.get(url)
+        response_json = json.loads(response.content.decode())
+        self.assertTrue(status.is_success(response.status_code))
+        self.assertEqual(response_json[0]['start_date'], "2020-02-04")
+        self.assertEqual(response_json[1]['start_date'], "2019-02-04")
+
         # confirm data is returned accurately
 
-    def test_resume_list_post(self):
-        # test post list of resume items
+    def test_resume_post(self):
+        # test post resume
+        resume_to_post = {'job_title': 'Test Job C',
+                          'company': 'Test Company C',
+                          'description': 'Test Description C',
+                          'start_date': '2005-09-06',
+                          'end_date': '2006-10-04'}
+        url = reverse('resume_list')
+        response = self.client.post(url, resume_to_post, format='json')
+        response_json = json.loads(response.content.decode())
+        self.assertTrue(status.is_success(response.status_code))
+        self.assertEqual(response_json['job_title'], "Test Job C")
+        self.assertEqual(response_json['company'], "Test Company C")
+        self.assertEqual(response_json['description'], "Test Description C")
+        self.assertEqual(response_json['start_date'], "2005-09-06")
+        self.assertEqual(response_json['end_date'], "2006-10-04")
 
-        pass
 
 
 class ContactInfoViewTestCases(APITestCase):
