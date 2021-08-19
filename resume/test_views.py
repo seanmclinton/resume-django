@@ -23,7 +23,7 @@ class ResumeViewTestCases(APITestCase):
         Resume.objects.create(job_title="Test Job B", company="Test Company B", description="Test Description B",
                               start_date=job_b_start_date, end_date=job_b_end_date)
 
-    def test_resume_list_get(self):
+    def test_resume_list_get(self) -> None:
         url = reverse('resume_list')
         response = self.client.get(url)
         response_json = json.loads(response.content.decode())
@@ -43,7 +43,7 @@ class ResumeViewTestCases(APITestCase):
                                             'end_date': '2020-02-03'
                                          }])
 
-    def test_resume_list_get_ordering(self):
+    def test_resume_list_get_ordering(self) -> None:
         # testing for resume items sorted in descending order by start date
         url = reverse('resume_list')
         response = self.client.get(url)
@@ -54,7 +54,7 @@ class ResumeViewTestCases(APITestCase):
 
         # confirm data is returned accurately
 
-    def test_resume_post(self):
+    def test_resume_post(self) -> None:
         # test post resume
         resume_to_post = {'job_title': 'Test Job C',
                           'company': 'Test Company C',
@@ -68,7 +68,7 @@ class ResumeViewTestCases(APITestCase):
         self.assertTrue(status.is_success(response.status_code))
         self.assertEqual(response_json, resume_to_post)
 
-    def test_resume_poor_format_post(self):
+    def test_resume_poor_format_post(self) -> None:
         resume_to_post = {'job_asdf': 'Test Job C',
                           'company': 'Test Company C',
                           'description': 'Test Description C',
@@ -94,7 +94,7 @@ class ContactInfoViewTestCases(APITestCase):
                                    linked_in_link="testlink.com",
                                    bio="test_bio")
 
-    def test_contact_list_url(self):
+    def test_contact_list_url(self) -> None:
         url = reverse('contact_list')
         response = self.client.get(url)
         self.assertTrue(status.is_success(response.status_code))
