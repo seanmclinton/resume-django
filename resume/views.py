@@ -47,7 +47,9 @@ def contact_detail(request, pk):
             return JsonResponse(serializer.data, safe=False)
         except exceptions.ObjectDoesNotExist:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-
+        return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    else:
+        return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
 @csrf_exempt
 def techology_used_list(request):
@@ -55,6 +57,8 @@ def techology_used_list(request):
         tech = TechnologyUsed.objects.all()
         serializer = TechnologyUsedSerializer(tech, many=True)
         return JsonResponse(serializer.data, safe=False)
+    else:
+        return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
 
 @csrf_exempt
