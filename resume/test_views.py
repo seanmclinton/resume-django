@@ -28,11 +28,20 @@ class ResumeViewTestCases(APITestCase):
         response = self.client.get(url)
         response_json = json.loads(response.content.decode())
         self.assertTrue(status.is_success(response.status_code))
-        self.assertEqual(response_json[0]['job_title'], "Test Job A")
-        self.assertEqual(response_json[0]['company'], "Test Company A")
-        self.assertEqual(response_json[0]['description'], "Test Description A")
-        self.assertEqual(response_json[0]['start_date'], "2020-02-04")
-        self.assertEqual(response_json[0]['end_date'], "2021-01-05")
+        self.assertEqual(response_json, [{  'id': 1,
+                                            'job_title': 'Test Job A',
+                                             'company': 'Test Company A',
+                                             'description': 'Test Description A',
+                                             'start_date': '2020-02-04',
+                                             'end_date': '2021-01-05'},
+                                         {
+                                            'id': 2,
+                                            'job_title': 'Test Job B',
+                                            'company': 'Test Company B',
+                                            'description': 'Test Description B',
+                                            'start_date': '2019-02-04',
+                                            'end_date': '2020-02-03'
+                                         }])
 
     def test_resume_list_get_ordering(self):
         # testing for resume items sorted in descending order by start date
@@ -55,13 +64,21 @@ class ResumeViewTestCases(APITestCase):
         url = reverse('resume_list')
         response = self.client.post(url, resume_to_post, format='json')
         response_json = json.loads(response.content.decode())
+        resume_to_post['id'] = 3
         self.assertTrue(status.is_success(response.status_code))
-        self.assertEqual(response_json['job_title'], "Test Job C")
-        self.assertEqual(response_json['company'], "Test Company C")
-        self.assertEqual(response_json['description'], "Test Description C")
-        self.assertEqual(response_json['start_date'], "2005-09-06")
-        self.assertEqual(response_json['end_date'], "2006-10-04")
+        self.assertEqual(response_json, resume_to_post)
 
+    def test_resume_poor_format_post(self):
+        resume_to_post = {'job_asdf': 'Test Job C',
+                          'company': 'Test Company C',
+                          'description': 'Test Description C',
+                          'start_date': '2005-09-06',
+                          'end_date': '2006-10-04'}
+        url = reverse('resume_list')
+        response = self.client.post(url, resume_to_post, format='json')
+        response_json = json.loads(response.content.decode())
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response_json, {"job_title": ["This field is required."]})
 
 
 class ContactInfoViewTestCases(APITestCase):
