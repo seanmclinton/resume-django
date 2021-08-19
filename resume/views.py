@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core import exceptions
+from django.forms.models import model_to_dict
 from rest_framework import status
-
+import json
+from datetime import datetime
 from .serializers import *
 from .models import *
 # Create your views here.
@@ -16,7 +18,24 @@ def resume_list(request):
         serializer = ResumeSerializer(resumes, many=True)
         return JsonResponse(serializer.data, safe=False)
     elif request.method == "POST":
-        pass
+        request_body = json.loads(request.body)
+        response = {'created': []}
+        try:
+            for resource in request_body['resources']:
+                resource_start_date = datetime.strptime(resource['start_date'], '%m/%d/%Y')
+                resource_end_date = datetime.strptime(resource['end_date'], '%m/%d/%Y')
+                new_object = Resume.objects.create(job_title=resource['job_title'],
+                                                   company=resource['company'],
+                                                   description=resource['description'],
+                                                   start_date=resource_start_date,
+                                                   end_date=resource_end_date)
+                response['created'].append(model_to_dict(new_object))
+        except KeyError:
+            # not sure about this one. let user know some objects were created but failed ?
+            return JsonResponse(response, safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # or just return an unhelpful 500?
+            # return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return JsonResponse(response, safe=False, status=status.HTTP_201_CREATED)
 
 
 @csrf_exempt
