@@ -55,3 +55,12 @@ class TechnologyUsedTestCases(TestCase):
 
         resume_object = Resume.objects.get(job_title="Test Job A")
         TechnologyUsed.objects.create(tech_name="Test Tech A", used_at=resume_object)
+
+    def test_tech_used_created(self) -> None:
+        test_object = TechnologyUsed.objects.get(tech_name="Test Tech A")
+        self.assertEqual(test_object.tech_name, "Test Tech A")
+        self.assertEqual(test_object.used_at.job_title, "Test Job A")
+
+    def test_str_function(self) -> None:
+        test_object = TechnologyUsed.objects.get(tech_name="Test Tech A")
+        self.assertEqual(str(test_object), "Test Tech A")
