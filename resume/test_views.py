@@ -28,12 +28,12 @@ class ResumeViewTestCases(APITestCase):
         response = self.client.get(url)
         response_json = json.loads(response.content.decode())
         self.assertTrue(status.is_success(response.status_code))
-        self.assertEqual(response_json, [{  'id': 1,
-                                            'job_title': 'Test Job A',
-                                             'company': 'Test Company A',
-                                             'description': 'Test Description A',
-                                             'start_date': '2020-02-04',
-                                             'end_date': '2021-01-05'},
+        self.assertEqual(response_json, [{'id': 1,
+                                          'job_title': 'Test Job A',
+                                          'company': 'Test Company A',
+                                          'description': 'Test Description A',
+                                          'start_date': '2020-02-04',
+                                          'end_date': '2021-01-05'},
                                          {
                                             'id': 2,
                                             'job_title': 'Test Job B',
@@ -42,6 +42,9 @@ class ResumeViewTestCases(APITestCase):
                                             'start_date': '2019-02-04',
                                             'end_date': '2020-02-03'
                                          }])
+
+    def test_resume_detail_get(self) -> None:
+        pass
 
     def test_resume_list_get_ordering(self) -> None:
         # testing for resume items sorted in descending order by start date
@@ -94,7 +97,46 @@ class ContactInfoViewTestCases(APITestCase):
                                    linked_in_link="testlink.com",
                                    bio="test_bio")
 
-    def test_contact_list_url(self) -> None:
+    def test_contact_list_get(self) -> None:
         url = reverse('contact_list')
         response = self.client.get(url)
         self.assertTrue(status.is_success(response.status_code))
+
+    def test_contact_detail_get(self) -> None:
+        pass
+
+    def test_contact_post(self) -> None:
+        pass
+
+    def test_contact_poor_format_post(self) -> None:
+        pass
+
+
+class TechnologyUsedViewTestCases(APITestCase):
+    urlpatterns = [
+        path('', include('resume.urls')),
+    ]
+
+    def setUp(self) -> None:
+        job_a_start_date = datetime.datetime(2020, 2, 4, 0, 0)
+        job_a_end_date = datetime.datetime(2021, 1, 5, 0, 0)
+        Resume.objects.create(job_title="Test Job A",
+                              company="Test Company A",
+                              description="Test Description A",
+                              start_date=job_a_start_date,
+                              end_date=job_a_end_date)
+
+        resume_object = Resume.objects.get(job_title="Test Job A")
+        TechnologyUsed.objects.create(tech_name="Test Tech A", used_at=resume_object)
+
+    def test_tech_used_list_get(self) -> None:
+        pass
+
+    def test_tech_used_detail_get(self) -> None:
+        pass
+
+    def test_tech_used_post(self) -> None:
+        pass
+
+    def test_tech_used_poor_format_post(self) -> None:
+        pass
