@@ -34,7 +34,7 @@ class ContactInfo(models.Model):
 
 class TechnologyUsed(models.Model):
     tech_name = models.CharField(max_length=50)
-    used_at = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    used_at = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name="Resume")
 
     class Meta:
         verbose_name = 'Technology Used'

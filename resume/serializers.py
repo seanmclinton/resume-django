@@ -5,16 +5,18 @@ from .models import *
 class ResumeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resume
-        fields = ('id', 'job_title', 'company', 'description', 'start_date', 'end_date')
+        fields = "__all__"
 
 
 class ContactInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactInfo
-        fields = ('first_name', 'last_name', 'city', 'email', 'linked_in_link', 'bio')
+        fields = "__all__"
 
 
 class TechnologyUsedSerializer(serializers.ModelSerializer):
+    used_at = ResumeSerializer(read_only=True)
+
     class Meta:
         model = TechnologyUsed
-        fields = ('tech_name', 'used_at')
+        fields = "__all__"

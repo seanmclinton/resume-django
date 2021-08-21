@@ -1,4 +1,6 @@
 from rest_framework import status, generics
+from rest_framework.response import Response
+
 from .serializers import *
 from .models import *
 # Create your views here.
@@ -32,3 +34,4 @@ class TechnologyUsedList(generics.ListCreateAPIView):
 class TechnologyUsedDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = TechnologyUsed.objects.all()
     serializer_class = TechnologyUsedSerializer
+
