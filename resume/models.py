@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Resume(models.Model):
+class Job(models.Model):
     job_title = models.CharField(max_length=100)
     company = models.CharField(max_length=100)
     description = models.TextField()
@@ -12,8 +12,8 @@ class Resume(models.Model):
         return self.job_title
 
     class Meta:
-        verbose_name = 'Resume'
-        verbose_name_plural = 'Resumes'
+        verbose_name = 'Job'
+        verbose_name_plural = 'Jobs'
 
 
 class ContactInfo(models.Model):
@@ -34,7 +34,7 @@ class ContactInfo(models.Model):
 
 class TechnologyUsed(models.Model):
     tech_name = models.CharField(max_length=50)
-    used_at = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name="Resume")
+    used_at = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="Job")
 
     class Meta:
         verbose_name = 'Technology Used'

@@ -7,7 +7,7 @@ import json
 from .models import *
 
 
-class ResumeViewTestCases(APITestCase):
+class JobViewTestCases(APITestCase):
     urlpatterns = [
         path('', include('resume.urls')),
     ]
@@ -15,16 +15,16 @@ class ResumeViewTestCases(APITestCase):
     def setUp(self) -> None:
         job_a_start_date = datetime.datetime(2020, 2, 4, 0, 0)
         job_a_end_date = datetime.datetime(2021, 1, 5, 0, 0)
-        Resume.objects.create(job_title="Test Job A", company="Test Company A", description="Test Description A",
+        Job.objects.create(job_title="Test Job A", company="Test Company A", description="Test Description A",
                               start_date=job_a_start_date, end_date=job_a_end_date)
 
         job_b_start_date = datetime.datetime(2019, 2, 4, 0, 0)
         job_b_end_date = datetime.datetime(2020, 2, 3, 0, 0)
-        Resume.objects.create(job_title="Test Job B", company="Test Company B", description="Test Description B",
+        Job.objects.create(job_title="Test Job B", company="Test Company B", description="Test Description B",
                               start_date=job_b_start_date, end_date=job_b_end_date)
 
-    def test_resume_list_get(self) -> None:
-        url = reverse('resume_list')
+    def test_job_list_get(self) -> None:
+        url = reverse('job_list')
         response = self.client.get(url)
         response_json = json.loads(response.content.decode())
         self.assertTrue(status.is_success(response.status_code))
@@ -48,7 +48,7 @@ class ResumeViewTestCases(APITestCase):
 
     def test_resume_list_get_ordering(self) -> None:
         # testing for resume items sorted in descending order by start date
-        url = reverse('resume_list')
+        url = reverse('job_list')
         response = self.client.get(url)
         response_json = json.loads(response.content.decode())
         self.assertTrue(status.is_success(response.status_code))
@@ -64,7 +64,7 @@ class ResumeViewTestCases(APITestCase):
                           'description': 'Test Description C',
                           'start_date': '2005-09-06',
                           'end_date': '2006-10-04'}
-        url = reverse('resume_list')
+        url = reverse('job_list')
         response = self.client.post(url, resume_to_post, format='json')
         response_json = json.loads(response.content.decode())
         resume_to_post['id'] = 3
@@ -77,7 +77,7 @@ class ResumeViewTestCases(APITestCase):
                           'description': 'Test Description C',
                           'start_date': '2005-09-06',
                           'end_date': '2006-10-04'}
-        url = reverse('resume_list')
+        url = reverse('job_list')
         response = self.client.post(url, resume_to_post, format='json')
         response_json = json.loads(response.content.decode())
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -120,13 +120,13 @@ class TechnologyUsedViewTestCases(APITestCase):
     def setUp(self) -> None:
         job_a_start_date = datetime.datetime(2020, 2, 4, 0, 0)
         job_a_end_date = datetime.datetime(2021, 1, 5, 0, 0)
-        Resume.objects.create(job_title="Test Job A",
+        Job.objects.create(job_title="Test Job A",
                               company="Test Company A",
                               description="Test Description A",
                               start_date=job_a_start_date,
                               end_date=job_a_end_date)
 
-        resume_object = Resume.objects.get(job_title="Test Job A")
+        resume_object = Job.objects.get(job_title="Test Job A")
         TechnologyUsed.objects.create(tech_name="Test Tech A", used_at=resume_object)
 
     def test_tech_used_list_get(self) -> None:

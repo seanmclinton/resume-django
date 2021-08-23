@@ -10,14 +10,14 @@ from .models import *
 # Create your views here.
 
 
-class ResumeList(generics.ListCreateAPIView):
-    queryset = Resume.objects.all().order_by("-start_date")
-    serializer_class = ResumeSerializer
+class JobList(generics.ListCreateAPIView):
+    queryset = Job.objects.all().order_by("-start_date")
+    serializer_class = JobSerializer
 
 
 class ResumeDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Resume.objects.all().order_by("-start_date")
-    serializer_class = ResumeSerializer
+    queryset = Job.objects.all().order_by("-start_date")
+    serializer_class = JobSerializer
 
 
 class ContactInfoList(generics.ListCreateAPIView):

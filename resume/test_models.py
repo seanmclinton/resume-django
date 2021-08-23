@@ -4,20 +4,20 @@ import datetime
 # Create your tests here.
 
 
-class ResumeTestCases(TestCase):
+class JobTestCases(TestCase):
     def setUp(self) -> None:
         job_a_start_date = datetime.datetime(2020, 2, 4, 0, 0)
         job_a_end_date = datetime.datetime(2021, 1, 5, 0, 0)
-        Resume.objects.create(job_title="Test Job A", company="Test Company A", description="Test Description A",
+        Job.objects.create(job_title="Test Job A", company="Test Company A", description="Test Description A",
                               start_date=job_a_start_date, end_date=job_a_end_date)
 
-    def test_resume_created(self) -> None:
-        test_object = Resume.objects.get(job_title="Test Job A")
+    def test_job_created(self) -> None:
+        test_object = Job.objects.get(job_title="Test Job A")
         self.assertEqual(test_object.description, "Test Description A")
         self.assertEqual(test_object.company, "Test Company A")
 
     def test_str_function(self) -> None:
-        test_object = Resume.objects.get(company="Test Company A")
+        test_object = Job.objects.get(company="Test Company A")
         self.assertEqual(str(test_object), "Test Job A")
 
 
@@ -47,14 +47,14 @@ class TechnologyUsedTestCases(TestCase):
     def setUp(self) -> None:
         job_a_start_date = datetime.datetime(2020, 2, 4, 0, 0)
         job_a_end_date = datetime.datetime(2021, 1, 5, 0, 0)
-        Resume.objects.create(job_title="Test Job A",
+        Job.objects.create(job_title="Test Job A",
                               company="Test Company A",
                               description="Test Description A",
                               start_date=job_a_start_date,
                               end_date=job_a_end_date)
 
-        resume_object = Resume.objects.get(job_title="Test Job A")
-        TechnologyUsed.objects.create(tech_name="Test Tech A", used_at=resume_object)
+        job_object = Job.objects.get(job_title="Test Job A")
+        TechnologyUsed.objects.create(tech_name="Test Tech A", used_at=job_object)
 
     def test_tech_used_created(self) -> None:
         test_object = TechnologyUsed.objects.get(tech_name="Test Tech A")
