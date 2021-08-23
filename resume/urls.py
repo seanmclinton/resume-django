@@ -8,5 +8,6 @@ urlpatterns = [
     path('contact_info/<int:pk>/', views.ContactInfoDetail.as_view(), name="contact_detail"),
     path('tech_used/', views.TechnologyUsedList.as_view(), name="tech_used_list"),
     path('tech_used/<int:pk>/', views.TechnologyUsedDetail.as_view(), name="tech_used_detail"),
+    path('teapot/', views.im_a_little_teapot, name="teapot")
 
 ]
