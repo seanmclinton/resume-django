@@ -15,7 +15,6 @@ class ContactInfoSerializer(serializers.ModelSerializer):
 
 
 class TechnologyUsedSerializer(serializers.ModelSerializer):
-    used_at = JobSerializer(read_only=True)
 
     class Meta:
         model = TechnologyUsed

@@ -17,8 +17,8 @@ class JobTestCases(TestCase):
         self.assertEqual(test_object.company, "Test Company A")
 
     def test_str_function(self) -> None:
-        test_object = Job.objects.get(company="Test Company A")
-        self.assertEqual(str(test_object), "Test Job A")
+        test_object = Job.objects.get(job_title="Test Job A")
+        self.assertEqual(str(test_object), "Test Company A")
 
 
 class ContactInfoTestCases(TestCase):

@@ -9,7 +9,7 @@ class Job(models.Model):
     end_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return self.job_title
+        return self.company
 
     class Meta:
         verbose_name = 'Job'
@@ -34,7 +34,7 @@ class ContactInfo(models.Model):
 
 class TechnologyUsed(models.Model):
     tech_name = models.CharField(max_length=50)
-    used_at = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="Job")
+    used_at_id = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="Job")
 
     class Meta:
         verbose_name = 'Technology Used'
